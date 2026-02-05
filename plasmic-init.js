@@ -1,6 +1,7 @@
 import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
 import ScrollerComp from "./components/ScrollerComp";
 import SwiperSlider from "./components/SwiperSlide";
+import Header from "./components/Header";
 
 export const PLASMIC = initPlasmicLoader({
   projects: [
@@ -31,6 +32,18 @@ PLASMIC.registerComponent(ScrollerComp, {
     children: 'slot',
     speed: 'number',
     style: 'object',
+  },
+});
+PLASMIC.registerComponent(Header, {
+  name: 'Header',
+  props: {
+    activePath:'string',
+    menu:'object',
+    address:'string',
+    contactEmail:'string',
+    contactPhone1:'string',
+    contactPhone2:'string',
+    enableDrawer:'boolean',
   },
 });
 

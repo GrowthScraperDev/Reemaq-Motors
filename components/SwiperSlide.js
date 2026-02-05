@@ -61,9 +61,6 @@ function SwiperSlider({
           <SwiperSlide key={index}>{child}</SwiperSlide>
         ))}
       </Swiper>
-      {/* <h1 className="text-3xl text-white font-bold underline">
-      Hello world!
-    </h1> */}
       {/* Custom Arrow Pagination */}
       <div style={arrowWrapperStyle}>
         <button
