@@ -140,7 +140,7 @@ export default function Header({
     contactPhone2,
     enableDrawer = true,
 }) {
-    const [openDropdown, setOpenDropdown] = useState("resources");
+    const [openDropdown, setOpenDropdown] = useState(null);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [mobileOpenKey, setMobileOpenKey] = useState(null);
 
