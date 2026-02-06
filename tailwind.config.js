@@ -31,6 +31,7 @@ module.exports = {
         brand: {
           red: "#CE0323",
           black: "#0C0C0C",
+          smoke:"#C4C4C4",
         },
         text: {
           primary: "#0C0C0C",
