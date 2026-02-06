@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-import { inter, sora } from "./font"; // adjust path if needed
+import { inter, sora } from "../components/font"; // adjust path if needed
 
 export default function MyApp({ Component, pageProps }) {
   return (
