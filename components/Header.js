@@ -4,6 +4,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
+import { useEffect } from "react";
 
 function renderLinkedList({
     data,
@@ -143,6 +144,17 @@ export default function Header({
     const [openDropdown, setOpenDropdown] = useState(null);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [mobileOpenKey, setMobileOpenKey] = useState(null);
+    useEffect(() => {
+        if (drawerOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [drawerOpen]);
 
     return (
         <>
@@ -161,7 +173,7 @@ export default function Header({
                     <nav className="hidden lg:flex gap-10 h-full items-center justify-center">
                         {Object.keys(menu).map((key) => {
                             const item = menu[key];
-                            const isActive = activePath === item.href;
+                            const isActive = activePath === key;
 
                             return (
                                 <div className="h-full flex items-center justify-center"
@@ -171,15 +183,22 @@ export default function Header({
                                     }
                                     onMouseLeave={() => setOpenDropdown(null)}
                                 >
-                                    <Link
-                                        href={item.hasDropdown ? "#" : item.href}
-                                        className={clsx(
+                                    {item.hasDropdown ?
+                                        <p className={clsx(
                                             "uppercase text-sm tracking-wide relative h-full flex items-center justify-center",
                                             isActive ? "text-brand-red border-t-4 border-brand-red" : "text-gray-600"
-                                        )}
-                                    >
-                                        {item.label}
-                                    </Link>
+                                        )}>{item.label}</p>
+                                        :
+                                        <Link
+                                            href={item.href}
+                                            className={clsx(
+                                                "uppercase text-sm tracking-wide relative h-full flex items-center justify-center",
+                                                isActive ? "text-brand-red border-t-4 border-brand-red" : "text-gray-600"
+                                            )}
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    }
 
                                     {item.hasDropdown && openDropdown === key && (
                                         key === "resources" ? (
@@ -338,25 +357,30 @@ function Drawer({
 
                             return (
                                 <li key={key} className="p-0 !m-0">
-                                    <Link href="#"
-                                        className="w-full flex justify-between items-center"
-                                        onClick={() =>
-                                            item.hasDropdown
-                                                ? setMobileOpenKey(isOpen ? null : key)
-                                                : null
-                                        }
-                                    >
-                                        {item.label}
-                                        {item.hasDropdown && (
+                                    {item.hasDropdown ?
+                                        <button
+                                            className="w-full flex justify-between items-center"
+                                            onClick={() =>
+                                                item.hasDropdown
+                                                    ? setMobileOpenKey(isOpen ? null : key)
+                                                    : null
+                                            }
+                                        >
+                                            {item.label}
                                             <ChevronDown
                                                 size={20}
                                                 strokeWidth={1.5}
                                                 className={`transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"
                                                     }`}
                                             />
-                                            // <span className="text-2xl">{isOpen ? "−" : "+"}</span>
-                                        )}
-                                    </Link>
+                                        </button>
+                                        :
+                                        <Link href={item.href}
+                                            className="w-full flex justify-between items-center"
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    }
 
                                     {item.hasDropdown && isOpen && (
                                         <div className="my-5 space-y-2 text-sm text-gray-600 flex flex-col gap-6">

@@ -2,6 +2,7 @@ import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
 import ScrollerComp from "./components/ScrollerComp";
 import SwiperSlider from "./components/SwiperSlide";
 import Header from "./components/Header";
+import SubscribeForm from "./components/SubscribeForm";
 
 export const PLASMIC = initPlasmicLoader({
   projects: [
@@ -46,7 +47,11 @@ PLASMIC.registerComponent(Header, {
     enableDrawer:'boolean',
   },
 });
-
+PLASMIC.registerComponent(SubscribeForm, {
+  name: 'SubscribeForm',
+  props: {
+  },
+});
 PLASMIC.registerComponent(SwiperSlider, {
   name: 'SwiperSlider',
   props: {
