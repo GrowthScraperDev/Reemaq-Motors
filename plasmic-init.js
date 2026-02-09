@@ -60,7 +60,10 @@ PLASMIC.registerComponent(SwiperSlider, {
     centeredSlides: 'boolean',
     autoplay: 'boolean',
     mobileSlides: 'number',
+    tabletSlides:'number',
     desktopSlides: 'number',
     marquee: 'boolean',
+    paginationPosition:'string',
+    paginationBg:'string'
   },
 });

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef,useState,useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
@@ -9,32 +9,51 @@ function SwiperSlider({
   autoplay,
   mobileSlides,
   desktopSlides,
-  marquee,
+  marquee,paginationBg,tabletSlides,
+  paginationPosition = "bottom-left", // ✅ NEW PROP
 }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+useEffect(() => {
+  const handleResize = () => {
+    setIsMobile(window.innerWidth < 1024);
+  };
+
+  handleResize(); // initial
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
   const swiperRef = useRef(null);
+
+  const bgColor = paginationBg  ? paginationBg : "#ffffff";
+
+  const isRight = paginationPosition === "right" && !isMobile;
+
   const arrowWrapperStyle = {
-    position: "relative",
-    marginTop:"32px",
+    position: isRight ? "absolute" : "relative",
+    right: isRight ? "0" : "auto",
+    top: isRight ? "-110px" : "auto", // adjust to match gallery UI
+    marginTop: isRight ? "0" : "32px",
     display: "flex",
     alignItems: "center",
+    gap: "2px",
     zIndex: 10,
-    gap:"2px",
-    width:"max-content"
+    width: "max-content",
   };
-  
+
   const arrowButtonStyle = {
     width: "56px",
     height: "56px",
     border: "none",
-    backgroundColor: "#ffffff",
+    backgroundColor: bgColor,
     fontSize: "20px",
     cursor: "pointer",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   };
-  
-  
+
   return (
     <div style={{ width: "100%", position: "relative" }}>
       <Swiper
@@ -53,6 +72,7 @@ function SwiperSlider({
         loop
         breakpoints={{
           0: { slidesPerView: mobileSlides || "auto" },
+          800: { slidesPerView: tabletSlides || "auto" },
           1204: { slidesPerView: desktopSlides || "auto" },
         }}
         spaceBetween={30}
@@ -61,6 +81,7 @@ function SwiperSlider({
           <SwiperSlide key={index}>{child}</SwiperSlide>
         ))}
       </Swiper>
+
       {/* Custom Arrow Pagination */}
       <div style={arrowWrapperStyle}>
         <button
@@ -69,8 +90,6 @@ function SwiperSlider({
         >
           ←
         </button>
-
-
         <button
           onClick={() => swiperRef.current?.slideNext()}
           style={arrowButtonStyle}
