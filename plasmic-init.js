@@ -3,6 +3,7 @@ import ScrollerComp from "./components/ScrollerComp";
 import SwiperSlider from "./components/SwiperSlide";
 import Header from "./components/Header";
 import SubscribeForm from "./components/SubscribeForm";
+import ContactForm from "./components/ContactForm";
 
 export const PLASMIC = initPlasmicLoader({
   projects: [
@@ -52,6 +53,11 @@ PLASMIC.registerComponent(SubscribeForm, {
   props: {
   },
 });
+PLASMIC.registerComponent(ContactForm, {
+  name: 'ContactForm',
+  props: {
+  },
+});
 PLASMIC.registerComponent(SwiperSlider, {
   name: 'SwiperSlider',
   props: {
@@ -64,6 +70,7 @@ PLASMIC.registerComponent(SwiperSlider, {
     desktopSlides: 'number',
     marquee: 'boolean',
     paginationPosition:'string',
-    paginationBg:'string'
+    paginationBg:'string',
+    noloop:'boolean'
   },
 });

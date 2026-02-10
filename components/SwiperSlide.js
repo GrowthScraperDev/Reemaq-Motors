@@ -7,8 +7,8 @@ function SwiperSlider({
   children,
   centeredSlides,
   autoplay,
-  mobileSlides,
-  desktopSlides,
+  mobileSlides,noloop=false,
+  desktopSlides,pagination = true,
   marquee,paginationBg,tabletSlides,
   paginationPosition = "bottom-left", // ✅ NEW PROP
 }) {
@@ -69,7 +69,7 @@ useEffect(() => {
             : false
         }
         speed={marquee ? 3000 : 700}
-        loop
+        loop={noloop ? false:true}
         breakpoints={{
           0: { slidesPerView: mobileSlides || "auto" },
           800: { slidesPerView: tabletSlides || "auto" },
@@ -83,7 +83,7 @@ useEffect(() => {
       </Swiper>
 
       {/* Custom Arrow Pagination */}
-      <div style={arrowWrapperStyle}>
+     {pagination && <div style={arrowWrapperStyle}>
         <button
           onClick={() => swiperRef.current?.slidePrev()}
           style={arrowButtonStyle}
@@ -96,7 +96,7 @@ useEffect(() => {
         >
           →
         </button>
-      </div>
+      </div>}
     </div>
   );
 }
