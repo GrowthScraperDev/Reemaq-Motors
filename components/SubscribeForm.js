@@ -9,7 +9,7 @@ export default function SubscribeForm() {
   if (state.succeeded) {
     return (
       <p className="text-green-400 text-sm">
-        Thank you! We'll get back to you shortly.
+        Thank you! We will get back to you shortly.
       </p>
     );
   }
