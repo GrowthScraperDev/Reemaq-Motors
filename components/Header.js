@@ -136,9 +136,9 @@ export default function Header({
     activePath = "",
     menu,
     address,
-    contactEmail,
+    contactEmail,contactEmail2 = "info@remaq.in",
     contactPhone1,
-    contactPhone2,
+    contactPhone2,contactPhone3="+91 90805 38756",
     enableDrawer = true,
 }) {
     const [openDropdown, setOpenDropdown] = useState(null);
@@ -230,8 +230,10 @@ export default function Header({
                     menu={menu}
                     address={address}
                     contactEmail={contactEmail}
+                    contactEmail2={contactEmail2}
                     contactPhone1={contactPhone1}
                     contactPhone2={contactPhone2}
+                    contactPhone3={contactPhone3}
                     mobileOpenKey={mobileOpenKey}
                     setMobileOpenKey={setMobileOpenKey}
                     onClose={() => setDrawerOpen(false)}
@@ -331,9 +333,9 @@ function ResourcesMenu({ data }) {
 function Drawer({
     menu,
     address,
-    contactEmail,
+    contactEmail,contactEmail2,
     contactPhone1,
-    contactPhone2,
+    contactPhone2,contactPhone3,
     mobileOpenKey,
     setMobileOpenKey,
     onClose,
@@ -451,10 +453,12 @@ function Drawer({
                     <div className="gap-[12px] lg:gap-[24px] flex flex-col">
                         <p className="text-sm text-text-primary mt-6 mb-2"><span className="text-brand-red">/</span> Contact Information
                         </p>
-                        <div className="gap-[12px] lg:gap-[24px] flex flex-col">
+                        <div className="gap-[12px] lg:gap-[12px] flex flex-col">
                             {contactEmail && <p className="border-b border-brand-red pb-1 w-max">{contactEmail}</p>}
+                            {contactEmail2 && <p className="border-b border-brand-red pb-1 w-max">{contactEmail2}</p>}
                             {contactPhone1 && <p className="border-b border-brand-red pb-1 w-max">{contactPhone1}</p>}
                             {contactPhone2 && <p className="border-b border-brand-red pb-1 w-max">{contactPhone2}</p>}
+                            {contactPhone3 && <p className="border-b border-brand-red pb-1 w-max">{contactPhone3}</p>}
                         </div>
                     </div>
                 </div>

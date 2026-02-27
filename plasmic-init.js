@@ -43,8 +43,10 @@ PLASMIC.registerComponent(Header, {
     menu:'object',
     address:'string',
     contactEmail:'string',
+    contactEmail2:'string',
     contactPhone1:'string',
     contactPhone2:'string',
+    contactPhone3:'string',
     enableDrawer:'boolean',
   },
 });
