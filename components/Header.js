@@ -5,6 +5,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { useEffect } from "react";
+import Head from "next/head";
 
 function renderLinkedList({
     data,
@@ -136,9 +137,9 @@ export default function Header({
     activePath = "",
     menu,
     address,
-    contactEmail,contactEmail2 = "info@remaq.in",
+    contactEmail, contactEmail2 = "info@remaq.in",
     contactPhone1,
-    contactPhone2,contactPhone3="+91 90805 38756",
+    contactPhone2, contactPhone3 = "+91 90805 38756",
     enableDrawer = true,
 }) {
     const [openDropdown, setOpenDropdown] = useState(null);
@@ -158,6 +159,9 @@ export default function Header({
 
     return (
         <>
+            <Head>
+                <meta name="robots" content="noindex, nofollow" />
+            </Head>
             {/* ================= HEADER ================= */}
             <header className="sticky top-0 left-0 w-full z-50 bg-white border-b h-[77px] md:h-[88px] ">
                 <div className="relative  mx-auto flex items-center justify-between h-full">
@@ -305,7 +309,7 @@ function ResourcesMenu({ data }) {
                 })}
 
                 <div className="space-y-4 text-gray-700 flex flex-col gap-[14px] lg:gap-[18px]">
-                    {renderStaticLinks(data, ["casestudies", "blog", "faq","gallery"])}
+                    {renderStaticLinks(data, ["casestudies", "blog", "faq", "gallery"])}
 
                 </div>
 
@@ -333,9 +337,9 @@ function ResourcesMenu({ data }) {
 function Drawer({
     menu,
     address,
-    contactEmail,contactEmail2,
+    contactEmail, contactEmail2,
     contactPhone1,
-    contactPhone2,contactPhone3,
+    contactPhone2, contactPhone3,
     mobileOpenKey,
     setMobileOpenKey,
     onClose,
@@ -406,7 +410,7 @@ function Drawer({
                                                     })}
 
                                                     <div className="flex flex-col gap-[14px]">
-                                                        {renderStaticLinks(item.dropdown, ["casestudies", "blog", "faq","gallery"])}
+                                                        {renderStaticLinks(item.dropdown, ["casestudies", "blog", "faq", "gallery"])}
                                                     </div>
                                                     <ImageCtaBlock
                                                         imageLink={item.dropdown.imageLink}
@@ -445,7 +449,7 @@ function Drawer({
                     </ul>
                 </div>
 
-                <div className="flex flex-col gap-[25px] md:gap-[56px] p-8">
+                <div className="flex flex-col gap-[25px] md:gap-[56px] p-8 pb-[100px]">
                     <div className="gap-[12px] lg:gap-[24px] flex flex-col">
                         <p className="text-sm mb-2 text-text-primary font-inter"><span className="text-brand-red">/</span> Address</p>
                         <p className="whitespace-pre-line text-lg md:text-2xl text-text-primary font-sora ">{address}</p>
@@ -463,7 +467,7 @@ function Drawer({
                     </div>
                 </div>
                 {menu.contact.getInTouchLink && <Link href={menu.contact.getInTouchLink}
-                    className="sticky lg:absolute bottom-[0px] left-[0px] group flex items-center justify-between w-[284px] h-[56px] px-[32px] bg-brand-black text-white font-inter text-sm uppercase tracking-wide  transition-colors duration-300  hover:bg-brand-red ">
+                    className="sticky bottom-[0px] left-[0px] group flex items-center justify-between w-[284px] h-[56px] px-[32px] bg-brand-black text-white font-inter text-sm uppercase tracking-wide  transition-colors duration-300  hover:bg-brand-red ">
                     <span>{menu.contact.getInTouch}</span>
                     <Image alt="arrow-img" src="/arrow.svg" className="transition-transform duration-300 group-hover:translate-x-1" width={24} height={24} />
                 </Link>}
