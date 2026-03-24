@@ -166,12 +166,14 @@ export default function Header({
             <header className="sticky top-0 left-0 w-full z-50 bg-white border-b h-[77px] md:h-[88px] ">
                 <div className="relative  mx-auto flex items-center justify-between h-full">
                     {/* LOGO */}
-                    <Image
-                        src="/reemaq-logo.svg"
-                        alt="Remaq" className=" pl-[20px] md:pl-[40px]"
-                        width={180}
-                        height={50}
-                    />
+                    <div>
+                        <Image
+                            src="/remaq.svg"
+                            alt="Remaq Logo" className="custom-width pl-[20px] md:pl-[40px]" style={{maxWidth:"80%"}}
+                            width={160}
+                            height={50}
+                        />
+                    </div>
 
                     {/* DESKTOP MENU */}
                     <nav className="hidden lg:flex gap-10 h-full items-center justify-center">
@@ -353,7 +355,7 @@ function Drawer({
                     ✕
                 </button>
                 <div className="p-8" >
-                    <Image src="/Symbol.svg" alt="mobile-icon" width={80} height={80} />
+                    <Image src="/remaq.svg" alt="mobile-icon" width={80} height={80} />
                 </div>
                 <div className="lg:hidden p-8">
                     <ul className="space-y-4 font-medium flex flex-col gap-3">
