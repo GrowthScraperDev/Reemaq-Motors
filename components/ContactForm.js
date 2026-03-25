@@ -1,6 +1,7 @@
 "use client";
 
 import { useForm, ValidationError } from "@formspree/react";
+import Image from "next/image";
 
 export default function ContactForm() {
   const [state, handleSubmit] = useForm("meelalzz"); // replace if different form ID
