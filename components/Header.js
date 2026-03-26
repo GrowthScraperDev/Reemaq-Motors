@@ -159,9 +159,6 @@ export default function Header({
 
     return (
         <>
-            <Head>
-                <meta name="robots" content="noindex, nofollow" />
-            </Head>
             {/* ================= HEADER ================= */}
             <header className="sticky top-0 left-0 w-full z-50 bg-white border-b h-[77px] md:h-[88px] ">
                 <div className="relative  mx-auto flex items-center justify-between h-full">
