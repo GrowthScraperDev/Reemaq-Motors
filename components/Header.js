@@ -166,8 +166,8 @@ export default function Header({
                     <div>
                         <Image
                             src="/remaq.svg"
-                            alt="Remaq Logo" className="custom-width pl-[20px] md:pl-[40px]" style={{maxWidth:"80%"}}
-                            width={160}
+                            alt="Remaq Logo" className="pl-[20px] md:pl-[40px]"
+                            width={190}
                             height={50}
                         />
                     </div>
