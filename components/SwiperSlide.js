@@ -9,7 +9,7 @@ function SwiperSlider({
   autoplay,
   mobileSlides,noloop=false,
   desktopSlides,pagination = true,
-  marquee,paginationBg,tabletSlides,
+  marquee,paginationBg,tabletSlides, goToSlide,
   paginationPosition = "bottom-left", // ✅ NEW PROP
 }) {
   const [isMobile, setIsMobile] = useState(false);
@@ -54,9 +54,26 @@ useEffect(() => {
     justifyContent: "center",
   };
 
+  useEffect(() => {
+    // ✅ Do nothing if prop is not passed
+    if (goToSlide === undefined || goToSlide === null) return;
+  
+    // ✅ Ensure swiper is ready
+    if (!swiperRef.current) return;
+  
+    // ✅ Ensure it's a valid number
+    if (typeof goToSlide !== "number") return;
+  
+    // ✅ Prevent unnecessary re-slide
+    if (swiperRef.current.realIndex === goToSlide) return;
+  
+    // ✅ Slide
+    swiperRef.current.slideTo(goToSlide - 1);
+  }, [goToSlide]);
+
   return (
     <div style={{ width: "100%", position: "relative" }}>
-      <Swiper
+      <Swiper goToSlide={goToSlide}
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         centeredSlides={centeredSlides}
         modules={[Autoplay]}

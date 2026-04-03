@@ -73,6 +73,7 @@ PLASMIC.registerComponent(SwiperSlider, {
     marquee: 'boolean',
     paginationPosition:'string',
     paginationBg:'string',
-    noloop:'boolean'
+    noloop:'boolean',
+    goToSlide:'number',
   },
 });
