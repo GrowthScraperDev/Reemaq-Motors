@@ -4,7 +4,7 @@ import SwiperSlider from "./components/SwiperSlide";
 import Header from "./components/Header";
 import SubscribeForm from "./components/SubscribeForm";
 import ContactForm from "./components/ContactForm";
-
+import MarkDownConverter from "./components/MarkdownConverter";
 export const PLASMIC = initPlasmicLoader({
   projects: [
     {
@@ -75,5 +75,12 @@ PLASMIC.registerComponent(SwiperSlider, {
     paginationBg:'string',
     noloop:'boolean',
     goToSlide:'number',
+  },
+});
+
+PLASMIC.registerComponent(MarkDownConverter, {
+  name: 'MarkDownConverter',
+  props: {
+    children:'string'
   },
 });
