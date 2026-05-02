@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import SubscribeForm from "./components/SubscribeForm";
 import ContactForm from "./components/ContactForm";
 import MarkDownConverter from "./components/MarkdownConverter";
+import Seo from "./components/Seo";
 export const PLASMIC = initPlasmicLoader({
   projects: [
     {
@@ -82,5 +83,15 @@ PLASMIC.registerComponent(MarkDownConverter, {
   name: 'MarkDownConverter',
   props: {
     children:'string'
+  },
+});
+
+PLASMIC.registerComponent(Seo, {
+  name: 'Seo',
+  props: {
+    title:'string',
+    description:'string',
+    canonical:'string',
+    schema:'object',
   },
 });

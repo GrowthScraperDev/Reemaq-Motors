@@ -5,7 +5,6 @@ import clsx from "clsx";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { useEffect } from "react";
-import Head from "next/head";
 
 function renderLinkedList({
     data,
@@ -169,12 +168,15 @@ export default function Header({
                 <div className="relative  mx-auto flex items-center justify-between h-full">
                     {/* LOGO */}
                     <div>
+                        <Link href="/">
                         <Image
                             src="/remaq.svg"
                             alt="Remaq Logo" className="pl-[20px] md:pl-[40px]"
                             width={190}
                             height={50}
                         />
+                        </Link>
+                      
                     </div>
 
                     {/* DESKTOP MENU */}
