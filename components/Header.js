@@ -1,4 +1,6 @@
 "use client";
+import Head from "next/head";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useState } from "react";
 import clsx from "clsx";
@@ -112,7 +114,7 @@ function renderServiceGroup(dropdown, prefix) {
                     {dropdown[`${prefix}Link4Txt`]}
                 </Link>
             )}
-             {dropdown[`${prefix}Link5`] && (
+            {dropdown[`${prefix}Link5`] && (
                 <Link href={dropdown[`${prefix}Link5`]}>
                     {dropdown[`${prefix}Link5Txt`]}
                 </Link>
@@ -160,23 +162,95 @@ export default function Header({
             document.body.style.overflow = "";
         };
     }, [drawerOpen]);
+    const pathname = usePathname();
+    const isContactPage = pathname?.startsWith("/contact");
+    const organizationSchema = {
+        "@context": "https://schema.org",
+        "@type": "Corporation",
+        name: "Remaq Motor Works",
+        url: "https://www.remaq.in/",
+        logo: "https://www.remaq.in/remaq.svg",
+        contactPoint: {
+            "@type": "ContactPoint",
+            telephone: "98840 77622",
+            contactType: "customer service",
+            areaServed: "IN",
+            availableLanguage: ["en", "Tamil"]
+        },
+        sameAs: [
+            "https://www.instagram.com/remaqmotorworks",
+            "https://x.com/Remaqmotorworks",
+            "https://www.youtube.com/@remaqmotorworks",
+            "https://www.facebook.com/RemaqMotors/"
+        ]
+    };
+
+    const localSchema = {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        name: "Remaq Motor Works",
+        image: "https://www.remaq.in/remaq.svg",
+        url: "https://www.remaq.in/",
+        telephone: "+91 9080538756",
+        address: {
+            "@type": "PostalAddress",
+            streetAddress:
+                "No 5A, Plot 2, Kalpaka Gopalan Street, Ayanambakkam Rd, Natesan Nagar",
+            addressLocality: "Chennai",
+            postalCode: "600095",
+            addressCountry: "IN"
+        },
+        geo: {
+            "@type": "GeoCoordinates",
+            latitude: 13.08217273298183,
+            longitude: 80.15391299996296
+        },
+        openingHoursSpecification: {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            opens: "09:00",
+            closes: "20:00"
+        },
+        sameAs: [
+            "https://www.facebook.com/RemaqMotors/",
+            "https://www.instagram.com/remaqmotorworks",
+            "https://x.com/Remaqmotorworks",
+            "https://www.youtube.com/@remaqmotorworks"
+        ]
+    };
+
+    const schemas = [
+        organizationSchema,
+        ...(isContactPage ? [localSchema] : [])
+    ];
 
     return (
         <>
+            <Head>
+                {schemas.map((item, index) => (
+                    <script
+                        key={index}
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={{
+                            __html: JSON.stringify(item)
+                        }}
+                    />
+                ))}
+            </Head>
             {/* ================= HEADER ================= */}
             <header className="sticky top-0 left-0 w-full z-50 bg-white border-b h-[77px] md:h-[88px] ">
                 <div className="relative  mx-auto flex items-center justify-between h-full">
                     {/* LOGO */}
                     <div>
                         <Link href="/">
-                        <Image
-                            src="/remaq.svg"
-                            alt="Remaq Logo" className="pl-[20px] md:pl-[40px]"
-                            width={190}
-                            height={50}
-                        />
+                            <Image
+                                src="/remaq.svg"
+                                alt="Remaq Logo" className="pl-[20px] md:pl-[40px]"
+                                width={190}
+                                height={50}
+                            />
                         </Link>
-                      
+
                     </div>
 
                     {/* DESKTOP MENU */}
