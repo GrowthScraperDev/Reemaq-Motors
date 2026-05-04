@@ -163,7 +163,14 @@ export default function Header({
         };
     }, [drawerOpen]);
     const pathname = usePathname();
+
+    const isHomePage = pathname === "/";
+    const isAboutPage = pathname?.startsWith("/about");
     const isContactPage = pathname?.startsWith("/contact");
+    
+    // Final condition
+    const showOrganizationSchema =
+      isHomePage || isAboutPage || isContactPage;
     const organizationSchema = {
         "@context": "https://schema.org",
         "@type": "Corporation",
@@ -220,9 +227,9 @@ export default function Header({
     };
 
     const schemas = [
-        organizationSchema,
+        ...(showOrganizationSchema ? [organizationSchema] : []),
         ...(isContactPage ? [localSchema] : [])
-    ];
+      ];
 
     return (
         <>
