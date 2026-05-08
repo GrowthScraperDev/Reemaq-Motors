@@ -274,22 +274,15 @@ export default function Header({
                                     }
                                     onMouseLeave={() => setOpenDropdown(null)}
                                 >
-                                    {item.hasDropdown ?
-                                        <p className={clsx(
-                                            "uppercase text-sm tracking-wide relative h-full flex items-center justify-center",
-                                            isActive ? "text-brand-red border-t-4 border-brand-red" : "text-gray-600"
-                                        )}>{item.label}</p>
-                                        :
-                                        <Link
-                                            href={item.href}
-                                            className={clsx(
-                                                "uppercase text-sm tracking-wide relative h-full flex items-center justify-center",
-                                                isActive ? "text-brand-red border-t-4 border-brand-red" : "text-gray-600"
-                                            )}
-                                        >
-                                            {item.label}
-                                        </Link>
-                                    }
+                                    <Link
+                                    href={item.hasDropdown ? item.label == "Services" ? "/services/" : "/industries/" :item.href}
+                                    className={clsx(
+                                        "uppercase text-sm tracking-wide relative h-full flex items-center justify-center",
+                                        isActive ? "text-brand-red border-t-4 border-brand-red" : "text-gray-600"
+                                    )}
+                                >
+                                    {item.label}
+                                </Link>
 
                                     {item.hasDropdown && openDropdown === key && (
                                         key === "resources" ? (
