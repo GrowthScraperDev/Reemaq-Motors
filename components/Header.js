@@ -389,7 +389,7 @@ function ResourcesMenu({ data }) {
                 })}
 
                 <div className="space-y-4 text-gray-700 flex flex-col gap-[14px] lg:gap-[18px]">
-                    {renderStaticLinks(data, ["casestudies", "blog", "faq", "gallery"])}
+                    {renderStaticLinks(data, ["blog","casestudies", "faq", "gallery"])}
 
                 </div>
 
@@ -490,7 +490,7 @@ function Drawer({
                                                     })}
 
                                                     <div className="flex flex-col gap-[14px]">
-                                                        {renderStaticLinks(item.dropdown, ["casestudies", "blog", "faq", "gallery"])}
+                                                        {renderStaticLinks(item.dropdown, [ "blog","casestudies", "faq", "gallery"])}
                                                     </div>
                                                     <ImageCtaBlock
                                                         imageLink={item.dropdown.imageLink}
