@@ -239,14 +239,14 @@ export default function Header({
         return (
             <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 bg-white border shadow-lg min-w-[320px] z-50">
                 <div className="p-6 flex flex-col gap-4">
-                    {title && (
+                    {/* {title && (
                         <Link
                             href={titleLink}
                             className="font-semibold border-b border-brand-red pb-1"
                         >
                             {title}
                         </Link>
-                    )}
+                    )} */}
 
                     {Array.from({ length: count }, (_, i) => {
                         const index = i + 1;
