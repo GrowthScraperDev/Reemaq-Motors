@@ -265,6 +265,9 @@ export default function Header({
                             </Link>
                         );
                     })}
+                      <Link href={titleLink} className=" pb-1 inline-flex">
+                        {"Explore All"}  <Image alt="black-arrow" src="/arrow-black.svg" width={22} height={22} />
+                    </Link>
                 </div>
             </div>
         );
