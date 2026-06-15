@@ -138,7 +138,6 @@ function renderStaticLinks(data, keys) {
     });
 }
 
-
 export default function Header({
     activePath = "",
     menu,
@@ -167,10 +166,10 @@ export default function Header({
     const isHomePage = pathname === "/";
     const isAboutPage = pathname?.startsWith("/about");
     const isContactPage = pathname?.startsWith("/contact");
-    
+
     // Final condition
     const showOrganizationSchema =
-      isHomePage || isAboutPage || isContactPage;
+        isHomePage || isAboutPage || isContactPage;
     const organizationSchema = {
         "@context": "https://schema.org",
         "@type": "Corporation",
@@ -229,8 +228,66 @@ export default function Header({
     const schemas = [
         ...(showOrganizationSchema ? [organizationSchema] : []),
         ...(isContactPage ? [localSchema] : [])
-      ];
+    ];
+    function SimpleDropdown({
+        data,
+        prefix,
+        count,
+        title,
+        titleLink,
+    }) {
+        return (
+            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 bg-white border shadow-lg min-w-[320px] z-50">
+                <div className="p-6 flex flex-col gap-4">
+                    {title && (
+                        <Link
+                            href={titleLink}
+                            className="font-semibold border-b border-brand-red pb-1"
+                        >
+                            {title}
+                        </Link>
+                    )}
 
+                    {Array.from({ length: count }, (_, i) => {
+                        const index = i + 1;
+                        const label = data[`${prefix}${index}`];
+                        const link = data[`${prefix}${index}Link`];
+
+                        if (!label || !link) return null;
+
+                        return (
+                            <Link
+                                key={index}
+                                href={link}
+                                className="hover:text-brand-red transition-colors"
+                            >
+                                {label}
+                            </Link>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    }
+    function ResourcesDropdown({ data }) {
+        return (
+            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 bg-white border shadow-lg min-w-[280px] z-50">
+                <div className="p-6 flex flex-col gap-4">
+                    <Link href={data.blogLink}>
+                        {data.blogTxt}
+                    </Link>
+
+                    <Link href={data.casestudiesLink}>
+                        {data.casestudiesTxt}
+                    </Link>
+
+                    <Link href={data.faqLink}>
+                        {data.faqTxt}
+                    </Link>
+                </div>
+            </div>
+        );
+    }
     return (
         <>
             <Head>
@@ -267,29 +324,62 @@ export default function Header({
                             const isActive = activePath === key;
 
                             return (
-                                <div className="h-full flex items-center justify-center"
+                                <div
                                     key={key}
+                                    className={clsx(
+                                        "h-full flex items-center justify-center",
+                                        key !== "services" && "relative"
+                                    )}
                                     onMouseEnter={() =>
                                         item.hasDropdown && setOpenDropdown(key)
                                     }
                                     onMouseLeave={() => setOpenDropdown(null)}
                                 >
                                     <Link
-                                    href={item.hasDropdown ? item.label == "Services" ? "/services/" : "/industries/" :item.href}
-                                    className={clsx(
-                                        "uppercase text-sm tracking-wide relative h-full flex items-center justify-center",
-                                        isActive ? "text-brand-red border-t-4 border-brand-red" : "text-gray-600"
-                                    )}
-                                >
-                                    {item.label}
-                                </Link>
+                                        href={
+                                            item.hasDropdown &&
+                                                item.href === "#"
+                                                ? "#"
+                                                : item.href
+                                        }
+                                        className={clsx(
+                                            "uppercase text-sm tracking-wide relative h-full flex items-center justify-center",
+                                            isActive ? "text-brand-red border-t-4 border-brand-red" : "text-gray-600"
+                                        )}
+                                    >
+                                        {item.label}
+                                    </Link>
 
                                     {item.hasDropdown && openDropdown === key && (
-                                        key === "resources" ? (
-                                            <ResourcesMenu data={item.dropdown} />
-                                        ) : (
-                                            <ServicesMenu data={item.dropdown} />
-                                        )
+                                        <>
+                                            {key === "services" && (
+                                                <ServicesMenu data={item.dropdown} />
+                                            )}
+
+                                            {key === "industries" && (
+                                                <SimpleDropdown
+                                                    data={item.dropdown}
+                                                    prefix="industries"
+                                                    count={4}
+                                                    title={item.dropdown.industries}
+                                                    titleLink={item.dropdown.industriesLink}
+                                                />
+                                            )}
+
+                                            {key === "applications" && (
+                                                <SimpleDropdown
+                                                    data={item.dropdown}
+                                                    prefix="application"
+                                                    count={6}
+                                                    title={item.dropdown.application}
+                                                    titleLink={item.dropdown.applicationLink}
+                                                />
+                                            )}
+
+                                            {key === "resources" && (
+                                                <ResourcesDropdown data={item.dropdown} />
+                                            )}
+                                        </>
                                     )}
                                 </div>
                             );
@@ -367,52 +457,6 @@ function ServicesMenu({ data }) {
     );
 }
 
-/* ================= RESOURCES DROPDOWN ================= */
-function ResourcesMenu({ data }) {
-    return (
-        <div className="absolute left-0 right-0 top-full bg-white border-t shadow-lg">
-            <div className="grid grid-cols-[1fr_1fr_200px_420px] gap-10 px-12 py-12">
-                {renderLinkedList({
-                    data,
-                    prefix: "industries",
-                    count: 4,
-                    title: data.industries,
-                    titleLink: data.industriesLink,
-                })}
-
-                {renderLinkedList({
-                    data,
-                    prefix: "application",
-                    count: 6,
-                    title: data.application,
-                    titleLink: data.applicationLink,
-                })}
-
-                <div className="space-y-4 text-gray-700 flex flex-col gap-[14px] lg:gap-[18px]">
-                    {renderStaticLinks(data, ["blog","casestudies", "faq", "gallery"])}
-
-                </div>
-
-                {data.imageLink && <div className="relative h-64">
-                    <Link href={data.imageLink}>
-                        <Image
-                            src={data.imageSrc}
-                            alt={data.imageCta}
-                            fill
-                            className="object-cover"
-                        />
-                        <button
-                            className="sticky md:absolute bottom-[0px] right-[0px] group flex items-center justify-between w-[284px] h-[56px] px-[32px] bg-brand-black text-white font-inter text-sm uppercase tracking-wide  transition-colors duration-300  hover:bg-brand-red ">
-                            <span>{data.imageCta}</span>
-                            <Image alt="arrow-img" src="/arrow.svg" className="transition-transform duration-300 group-hover:translate-x-1" width={24} height={24} />
-                        </button>
-                    </Link>
-                </div>}
-            </div>
-        </div>
-    );
-}
-
 /* ================= DRAWER (MOBILE) ================= */
 function Drawer({
     menu,
@@ -471,7 +515,30 @@ function Drawer({
                                     {item.hasDropdown && isOpen && (
                                         <div className="my-5 space-y-2 text-sm text-gray-600 flex flex-col gap-6">
                                             {/* ===== ONLY FOR RESOURCES ===== */}
-                                            {key === "resources" && (
+                                            {key === "services" && (
+                                                <>
+                                                    <div className="flex flex-col gap-[20px]">
+                                                        <Link
+                                                            href={item.dropdown.service1Link}
+                                                            className="border-b border-brand-red pb-1 inline-flex w-max"
+                                                        >
+                                                            {item.dropdown.service1LinkTxt}
+                                                        </Link>
+
+                                                        <div className="flex flex-col gap-[14px]">
+                                                            {renderServiceGroup(item.dropdown, "service2")}
+                                                        </div>
+                                                    </div>
+
+                                                    <ImageCtaBlock
+                                                        imageLink={item.dropdown.imageLink}
+                                                        imageSrc={item.dropdown.imageSrc}
+                                                        imageAlt={item.dropdown.imageCta}
+                                                        ctaText={item.dropdown.imageCta}
+                                                    />
+                                                </>
+                                            )}
+                                            {key === "industries" && (
                                                 <>
                                                     {renderLinkedList({
                                                         data: item.dropdown,
@@ -480,7 +547,10 @@ function Drawer({
                                                         title: item.dropdown.industries,
                                                         titleLink: item.dropdown.industriesLink,
                                                     })}
-
+                                                </>
+                                            )}
+                                            {key === "applications" && (
+                                                <>
                                                     {renderLinkedList({
                                                         data: item.dropdown,
                                                         prefix: "application",
@@ -488,31 +558,17 @@ function Drawer({
                                                         title: item.dropdown.application,
                                                         titleLink: item.dropdown.applicationLink,
                                                     })}
-
-                                                    <div className="flex flex-col gap-[14px]">
-                                                        {renderStaticLinks(item.dropdown, [ "blog","casestudies", "faq", "gallery"])}
-                                                    </div>
-                                                    <ImageCtaBlock
-                                                        imageLink={item.dropdown.imageLink}
-                                                        imageSrc={item.dropdown.imageSrc}
-                                                        imageAlt={item.dropdown.imageCta}
-                                                        ctaText={item.dropdown.imageCta}
-                                                    />
-
                                                 </>
-                                            )}
-
-                                            {/* ===== ONLY FOR SERVICES (example) ===== */}
-                                            {key === "services" && (
+                                            )}{key === "resources" && (
                                                 <>
-                                                    <div className="flex flex-col gap-[20px] lg:gap-[24px]">
-                                                        <Link href={item.dropdown.service1Link} className="border-b border-brand-red pb-1 inline-flex w-max">
-                                                            {item.dropdown.service1LinkTxt}  <Image alt="black-arrow" src="/arrow-black.svg" width={22} height={22} />
-                                                        </Link>
-                                                        <div className="flex flex-col gap-[14px] lg:gap-[24px]">
-                                                            {renderServiceGroup(item.dropdown, "service2")}
-                                                        </div>
+                                                    <div className="flex flex-col gap-[14px]">
+                                                        {renderStaticLinks(item.dropdown, [
+                                                            "blog",
+                                                            "casestudies",
+                                                            "faq",
+                                                        ])}
                                                     </div>
+
                                                     <ImageCtaBlock
                                                         imageLink={item.dropdown.imageLink}
                                                         imageSrc={item.dropdown.imageSrc}
