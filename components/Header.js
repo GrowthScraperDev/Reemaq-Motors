@@ -17,14 +17,14 @@ function renderLinkedList({
 }) {
     return (
         <div className="space-y-4 flex flex-col gap-[18px] lg:gap-[24px]">
-            {title && (
+            {/* {title && (
                 <Link
                     href={titleLink || "#"}
                     className="border-b border-brand-red pb-1 inline-flex w-max"
                 >
                     {title} <Image alt="black-arrow" src="/arrow-black.svg" width={22} height={22} />
                 </Link>
-            )}
+            )} */}
             <div className="flex flex-col gap-[14px] lg:gap-[18px] !mt-0">
                 {Array.from({ length: count }, (_, i) => {
                     const index = i + 1;
@@ -39,6 +39,9 @@ function renderLinkedList({
                         </Link>
                     );
                 })}
+                 <Link href={titleLink} className="border-b border-brand-red w-max pb-1 inline-flex">
+                        {"Explore All"}  <Image alt="black-arrow" src="/arrow-black.svg" width={22} height={22} />
+                    </Link>
             </div>
         </div>
     );
@@ -265,7 +268,7 @@ export default function Header({
                             </Link>
                         );
                     })}
-                      <Link href={titleLink} className=" pb-1 inline-flex">
+                      <Link href={titleLink} className="border-b border-brand-red w-max pb-1 inline-flex">
                         {"Explore All"}  <Image alt="black-arrow" src="/arrow-black.svg" width={22} height={22} />
                     </Link>
                 </div>
