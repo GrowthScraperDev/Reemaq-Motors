@@ -343,9 +343,12 @@ export default function Header({
                                 >
                                     <Link
                                         href={
-                                            item.hasDropdown &&
-                                                item.href === "#"
-                                                ? "#"
+                                            key === "services"
+                                                ? item.dropdown.service1Link
+                                                : key === "industries"
+                                                ? item.dropdown.industriesLink
+                                                : key === "applications"
+                                                ? item.dropdown.applicationLink
                                                 : item.href
                                         }
                                         className={clsx(
